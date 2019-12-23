@@ -1,0 +1,10 @@
+[package]
+name = "webfile"
+version = "0.1.0"
+authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
+edition = "2018"
+
+[dependencies]
+hyper = "0.13.1"
+lazy_static = "1.4.0"
+tokio = { version = "0.2.6", features = ["fs", "macros", "signal"] }

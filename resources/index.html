@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{{ title }}</title>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.js"
+            integrity="sha256-dPTL2a+npIonoK5i0Tyes0txCMUWZBf8cfKRfACRotc="
+            crossorigin="anonymous"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
+            integrity="sha256-vZ3SaLOjnKO/gGvcUWegySoDU6ff33CS5i9ot8J9Czk="
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <script>
+            function save(cm) {
+                const body = cm.getValue();
+                fetch("/", {
+                    method: "PUT",
+                    body,
+                })
+                    .then(async (res) => {
+                        if (res.status == 400) {
+                            throw "Bad Request";
+                        } else if ((res.status = 500)) {
+                            throw "Internal Server Error";
+                        }
+
+                        alert("Saved");
+                    })
+                    .catch(alert);
+            }
+
+            const contents = "{{ contents }}";
+            const cm = CodeMirror(document.body, {
+                value: contents,
+                extraKeys: {
+                    "Ctrl-S": save,
+                },
+            });
+        </script>
+    </body>
+</html>
